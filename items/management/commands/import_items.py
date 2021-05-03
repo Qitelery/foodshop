@@ -16,7 +16,7 @@ class Command(BaseCommand):
                 defaults={
                     'title': item['title'],
                     'description': item['description'],
-                    'image': '',
+                    'image': item['image'],
                     'weight': item['weight_grams'],
                     'price': item['price'],
                     'category': item['cat'],

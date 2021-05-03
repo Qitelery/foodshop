@@ -21,8 +21,8 @@ class Command(BaseCommand):
                     'middle_name': user['info']['patronymic'],
                     'last_name': user['info']['surname'],
                     'phone': user['contacts']['phoneNumber'],
-                    'adress': user['city_kladr'],
-                    'pass_user': user['password'],
+                    'address': user['city_kladr'],
+                    'password': user['password'],
                     'type_account': user['premium'],
                 }
             )
