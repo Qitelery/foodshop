@@ -11,6 +11,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "192.168.0.121", "127.0.0.1"]
 
+CORS_ORIGIN_WHITELIST = [
+    'https://127.0.0.1:8000'
+]
+
 AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
@@ -21,9 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'foodshop',
     'users',
     'items',
@@ -32,9 +36,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -42,17 +46,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
-
-CORS_ALLOWED_ORIGINS = [
-    "https://192.168.0.121",
-    "http://localhost:8080",
-    "http://127.0.0.1:9000"
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True  # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://127.0.0.1:8000',
 ]
+
 
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -119,7 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 4
+    'PAGE_SIZE': 4,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',]
 }
 
 SWAGGER_SETTINGS = {
