@@ -12,7 +12,7 @@ class Command(BaseCommand):
         response = requests.get(url=URL).json()
 
         for user in response:
-            User.objects.update_or_create(
+            user, created = User.objects.update_or_create(
                 id=user['id'],
                 defaults={
                     'username': user['email'].split('@')[0],
@@ -26,4 +26,6 @@ class Command(BaseCommand):
                     'type_account': user['premium'],
                 }
             )
+            user.set_password(user.password)
+            user.save()
         return

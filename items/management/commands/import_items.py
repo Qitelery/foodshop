@@ -11,15 +11,19 @@ class Command(BaseCommand):
         response = requests.get(url=URL).json()
 
         for item in response:
-            Item.objects.update_or_create(
+            created_item, _ = Item.objects.update_or_create(
                 id=item['id'],
                 defaults={
                     'title': item['title'],
                     'description': item['description'],
-                    'image': item['image'],
+                    'image': '',
                     'weight': item['weight_grams'],
                     'price': item['price'],
                     'category': item['cat'],
                 }
             )
+            img_response = requests.get(item['image'], stream=True)
+            img_response.raise_for_status()
+            *_, file_name = item['image'].rsplit('/', maxsplit=1)
+            created_item.image.save(file_name, img_response.raw)
         return
