@@ -14,7 +14,7 @@ class CartViewSet(ReadOnlyModelViewSet):
 
 
 class CartItemViewSet(ModelViewSet):
-    queryset = CartItem.objects.all()
+
     serializer_class = CartItemSerializer
     permission_classes = [IsAuthenticated]
 
